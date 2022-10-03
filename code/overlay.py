@@ -1,6 +1,8 @@
 import pygame
 from settings import *
 
+# Overlay of selected tool & seed in bottom-right corner of screen
+
 
 class Overlay:
     def __init__(self, player):

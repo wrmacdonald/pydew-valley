@@ -1,8 +1,10 @@
 import pygame
 
+# Create timers for limiting input to 1 action over a specific time
+
 
 class Timer:
-    def __init__(self, duration, func = None):
+    def __init__(self, duration, func=None):
         self.duration = duration
         self.func = func
         self.start_time = 0

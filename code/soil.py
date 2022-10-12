@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from pytmx.util_pygame import load_pygame
+from support import *
 
 
 class SoilTile(pygame.sprite.Sprite):
@@ -19,6 +20,7 @@ class SoilLayer:
 
         # graphics
         self.soil_surf = pygame.image.load('../graphics/soil/o.png')
+        self.soil_surfs = import_folder_dict('../graphics/soil/')
 
         # requirements
         # if area is farmable
@@ -60,12 +62,27 @@ class SoilLayer:
                     self.create_soil_tiles()
 
     def create_soil_tiles(self):
+        # get rid of existing soil patches & redraw them
         self.soil_sprites.empty()
         for index_row, row in enumerate(self.grid):
             for index_col, cell in enumerate(row):
                 if 'X' in cell:
+
+                    # create auto-tiling
+                    # tile options surrounding
+                    t = 'X' in self.grid[index_row - 1][index_col]
+                    b = 'X' in self.grid[index_row + 1][index_col]
+                    r = 'X' in row[index_col + 1]
+                    l = 'X' in row[index_col - 1]
+
+                    # default tile
+                    tile_type = 'o'
+
+                    # all sides
+                    if all((t, b, r, l)): tile_type = 'x'
+
                     SoilTile(
                         pos=(index_col * TILE_SIZE, index_row * TILE_SIZE),
-                        surf=self.soil_surf,
+                        surf=self.soil_surfs[tile_type],
                         groups=[self.all_sprites, self.soil_sprites]
                     )

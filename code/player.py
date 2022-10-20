@@ -75,8 +75,7 @@ class Player(pygame.sprite.Sprite):
         self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
 
     def use_seed(self):
-        # print(self.selected_seed)
-        pass
+        self.soil_layer.plant_seed(self.target_pos, self.selected_seed)
 
     def import_assets(self):
         # dict to get player states & animations
@@ -156,7 +155,6 @@ class Player(pygame.sprite.Sprite):
                     else:   # bed
                         self.status = 'left_idle'
                         self.sleep = True
-
 
     def get_status(self):
         # Idle Animation - if player not moving: add '_idle' to the status
